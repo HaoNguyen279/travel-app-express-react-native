@@ -34,3 +34,38 @@ Example BODY :
             temperature: 0.7
         })
 
+-- SET UP POSTGRE SQL -- 
+1. npm install pg
+2. create src\config\db.js file (same as MSSQL)
+3. with the config in db.js file :
+const { Pool } = require('pg');
+const pool = new Pool({
+    user: 'your_username',
+    host: 'localhost',
+    database: 'your_database',
+    password: 'your_password',
+    port: 5432
+});
+module.exports = {
+    query: (text, params) => pool.query(text, params)
+};
+
+duma vailon
+Postgre dùng || để nối chuỗi thay vì ' + ' 💀💀💀
+
+-- FETCH TO TEST A POST METHOD --
+
+fetch("http://localhost:3000/users", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({  -- Ở ĐÂY phải dùng stringify sau đó ở express dùng express.json để parse là đc 
+    email: "a@test.com",
+    password: "123456",
+  }),
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+  - Hỏi tại sao cần JSON.stringify ở post request body á thì là do HTTPS chỉ truyền đc dạng text,... ko hiểu object là j nên v đó, stringify xong về parse lại là ok

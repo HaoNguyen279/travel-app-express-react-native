@@ -4,23 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "react-native-paper";
 import  PlaceCard  from "@/components/place-card";
 import { getAllPlaces } from "@/services/place.service";
-import { usePlace } from "@/hooks/userPlace";
-async function fetchtest() {
-    // const url = "http://192.168.1.64:3000/api/users/getAllUsers"
-    // try {
-    //     const response = await fetch(url);
-    //     if(!response.ok){
-    //         throw new Error(`Response status: ${response.status}`);
-    //     }
-    //     const result = await response.json();
-    //     console.log(result);
-    // } catch (error: any) {
-    //     console.log(error.message);
-    // }
-    const res = await getAllPlaces();
-
-    console.log(res.data);
-}
+import { usePlace } from "@/hooks/usePlace"
 
 export default function MyScreen() {
     const {place, loading} = usePlace();
@@ -32,7 +16,7 @@ export default function MyScreen() {
             <View>
                 <Link href={"/"} asChild replace>
                     <Button mode="contained">
-                        <Text></Text>
+                        <Text>Test</Text>
                     </Button>
                 </Link>
             </View>
