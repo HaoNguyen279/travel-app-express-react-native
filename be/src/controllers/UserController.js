@@ -64,11 +64,11 @@ class UserController{
 
             res.cookie("refreshToken", refreshToken, {
                 ...cookieOptions2,
-                maxAge: 7 * 24 * 60 * 60 * 1000
+                maxAge: 1000 * 15
             });
             res.cookie("accessToken", accessToken, {
                 ...cookieOptions1,
-                maxAge: 1000 * 30
+                maxAge: 1000 * 3
             });
             res.json({message : "Login successful" });
         } else {
@@ -77,6 +77,7 @@ class UserController{
         }
     }
     async refresh(req, res, next){
+        console.log("Request to refresh access token 🔄🔄🔄🔄");
         const refreshToken = req.cookies.refreshToken;
 
         if(!refreshToken){
@@ -92,19 +93,20 @@ class UserController{
         jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) =>{
             if(err){
                 console.log("Failed to verify refresh token, look like its a fake token 😨😨😨");
-                return res,json("Failed to verify refresh token");
+                return res.json("Failed to verify refresh token");
             }
 
             const isProduction = process.env.NODE_ENV === 'production';
             const newAccessToken  = generateAccesssToken(user);
-            res.cookie("accessToken", accessToken, {
+            res.cookie("accessToken", newAccessToken, {
                 httpOnly : true,
                 secure : isProduction,
                 sameSite : isProduction ? 'none' : 'lax',
                 path : '/',
-                maxAge : 1000 * 30 // 30s là bay token
+                maxAge : 1000 * 3 // 3s là bay token
 
             })
+            return res.status(200).json({message : "Generate new access token successfully"});
         })
     }
 

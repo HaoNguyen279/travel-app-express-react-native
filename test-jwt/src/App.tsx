@@ -8,6 +8,13 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  useEffect(() =>{
+    const timer = setTimeout(() =>{
+      setMessage(null);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [message])
   return (
     <>
       <CustomInput label="Email" type="email" placeholder="Nhập email" setTextParent={setEmail}/>

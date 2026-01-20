@@ -1,15 +1,10 @@
-import axios from 'axios';
-import { useEffect } from 'react';
-
-const BASE_URL = import.meta.env.VITE_BASE_URL; 
+import api from '../api/axios';
 
 export default function Button({email, password, setMessage } : {email : string, password : string, setMessage : (data : any) => void}) {
     const login = async () =>{
-        axios.post(BASE_URL + '/auth/login', {
+        api.post('/auth/login', {
             email: email,
             password: password
-        },{
-            "withCredentials" : true
         })
         .then((response) => {
             const msg = response?.data?.message ?? 'Đăng nhập thành công';
@@ -29,16 +24,16 @@ export default function Button({email, password, setMessage } : {email : string,
     }
 
     const fetchPlace = async () =>{
-        axios.get(BASE_URL + '/api/places/getAllPlaces', 
-            {
-                "withCredentials" : true
-            }
+        api.get('/api/places/getAllPlaces'
         ).then((response) =>{
             const msg = response?.data || null;
             console.log(msg);
             setMessage(JSON.stringify(msg));
         }).catch(error =>{
             console.log(error);
+            if(error.status === 401 || error.status === 403){
+                console.log("Á đù dính r");
+            }
             const errMsg = error?.response?.data?.message || error?.message || 'Có lỗi xảy ra';
             setMessage(errMsg);
         })
