@@ -64,11 +64,11 @@ class UserController{
 
             res.cookie("refreshToken", refreshToken, {
                 ...cookieOptions2,
-                maxAge: 1000 * 15
+                maxAge: 1000 * 60 * 60 * 3 // 3 hours
             });
             res.cookie("accessToken", accessToken, {
                 ...cookieOptions1,
-                maxAge: 1000 * 3
+                maxAge: 1000 * 60 * 15 // 15 minutes 
             });
             res.json({message : "Login successful" });
         } else {
@@ -103,19 +103,22 @@ class UserController{
                 secure : isProduction,
                 sameSite : isProduction ? 'none' : 'lax',
                 path : '/',
-                maxAge : 1000 * 3 // 3s là bay token
-
+                maxAge : 1000 * 60 * 15 // 15 minutes 
             })
             return res.status(200).json({message : "Generate new access token successfully"});
         })
     }
 
-
+ 
 
     
-    async testAuthen(req, res, next){
-        console.log("Verified user by access token 💀💀💀💀");
-        res.json({message: "verified user by access token"});
+    async me(req, res, next){
+        const request_access_token = req.cookies.accessToken;
+        if(!request_access_token){
+            return res.status(401).json({message : "Access token missing"});
+        }
+        const payload = jwt.verify(request_access_token, process.env.JWT_ACCESS_SECRET);
+        
     }
 }
 

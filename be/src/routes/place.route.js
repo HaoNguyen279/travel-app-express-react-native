@@ -5,8 +5,8 @@ const PlaceController = require('../controllers/PlaceController');
 const GemmaController = require('../controllers/GemmaController');
 const { authenticateAccessToken } = require('../middlewares/authenticate');
 
-router.get('/getAllPlaces', authenticateAccessToken, PlaceController.getAllPlaces);
+router.get('/getAllPlaces', PlaceController.getAllPlaces);
 
-router.get('/getTop10Places', authenticateAccessToken, GemmaController.getResult);
+router.get('/getTop10Places', GemmaController.getResult);
 
 module.exports = router;

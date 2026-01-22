@@ -9,7 +9,7 @@ router.post('/register', UserController.register);
 
 router.post('/refresh', UserController.refresh);
 
-router.get('/testAuthen', authenticateAccessToken, UserController.testAuthen);
+router.get('/me',  UserController.me);
 
 
 module.exports =  router;
