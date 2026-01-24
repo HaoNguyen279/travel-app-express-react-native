@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const placeRouter = require('./routes/place.route');
 const userRouter = require('./routes/user.route');
 const authRouter = require('./routes/auth.route');
-
+const postRouter = require('./routes/post.route');
 // CORS policy
 app.use(cors({
   origin: 'http://localhost:5173',
@@ -27,6 +27,8 @@ app.use((req, res, next) => {
 app.use('/api/users', userRouter);
 
 app.use('/api/places', placeRouter);
+
+app.use('/api/posts', postRouter);
 
 app.use('/auth', authRouter);
 
